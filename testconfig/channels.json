@@ -1,0 +1,122 @@
+{
+    "ModelName" : "Test", 
+    "ModelId": "some_id", 
+    "ModelVersion": "1.0.0",
+    "Tags": [
+        {
+            "TagName": "TriggerStart", 
+            "RawTopic": "TRIGGER/MIRROR/START/ID", 
+            "VariableType": "TriggerStart", 
+            "Location" : "CH01", 
+            "unit" : "auto", 
+            "datasource" : "ID" 
+        }, 
+        {
+            "TagName": "TempCH01",
+            "RawTopic": "TEST/MIRROR/CH01/TEMP",
+            "VariableType": "Average",
+            "Location" : "CH01", 
+            "unit" : "C"
+        }, 
+        {
+            "TagName": "VelocityConveyorBelt",
+            "RawTopic": "TEST/MIRROR/CH01/BELTSPEED",
+            "VariableType": "Average",
+            "Location" : "CH01", 
+            "unit"  : "m/s"
+        },
+        {
+            "TagName": "TempCH02",
+            "RawTopic": "TEST/MIRROR/CH02/TEMP",
+            "VariableType": "Average",
+            "Location" : "CH02", 
+            "unit" : "C"
+        }, 
+        {
+            "TagName": "PressureCH02",
+            "RawTopic": "TEST/MIRROR/CH02/PRESSURE",
+            "VariableType": "Average",
+            "Location" : "CH02", 
+            "unit" : "Pa"
+        }, 
+        {
+            "TagName": "VelocityConveyorBelt",
+            "RawTopic": "TEST/MIRROR/CH02/BELTSPEED",
+            "VariableType": "Average",
+            "Location" : "CH02", 
+            "unit" : "m/s"
+        },  
+        {
+            "TagName": "TempCH03",
+            "RawTopic": "TEST/MIRROR/CH03/TEMP",
+            "VariableType": "Average",
+            "Location" : "CH03", 
+            "unit" : "C"
+        },
+        {
+            "TagName": "VelocityConveyorBelt",
+            "RawTopic": "TEST/MIRROR/CH03/BELTSPEED",
+            "VariableType": "Average",
+            "Location" : "CH03", 
+            "unit" : "m/s"
+        }
+    ], 
+    "Locations" : [
+        {
+            "Name" : "CH01",
+            "Description" : "Chamber 1", 
+            "TopicPrevious" : "TRIGGER/MIRROR/START/ID",
+            "Trigger" : {
+                "type" : "delay_constant", 
+                "time" : 10, 
+                "unit" : "second"
+            }, 
+            "TopicEntry" : "TRIGGER/CH01/TRIGGER/ENTRY", 
+            "TopicExit" : "TRIGGER/CH01/TRIGGER/EXIT"
+        }, 
+        {
+            "Name" : "CH02", 
+            "TopicPrevious" : "TRIGGER/CH01/TRIGGER/EXIT",
+            "Description" : "Chamber 2", 
+            "Trigger" : {
+                "type" : "delay_constant", 
+                "time" : 18, 
+                "time_pre" : 0,
+                "distance_pre" : 1, 
+                "velocity_pre_topic" : "TEST/MIRROR/CH01/BELTSPEED",
+                "distance" : 5, 
+                "unit" : "meter", 
+                "velocity_topic" : "TEST/MIRROR/CH02/BELTSPEED"
+            }, 
+            "TopicEntry" : "TRIGGER/CH02/TRIGGER/ENTRY", 
+            "TopicExit" : "TRIGGER/CH02/TRIGGER/EXIT"
+        }, 
+        {
+            "Name" : "CH03", 
+            "TopicPrevious" : "TRIGGER/CH02/TRIGGER/EXIT",
+            "Description" : "Chamber 3", 
+            "Trigger" : {
+                "type" : "delay_variable", 
+                "distance" : 5,
+                "unit" : "meter", 
+                "velocity_topic" : "TEST/MIRROR/CH03/BELTSPEED"
+            }, 
+            "TopicEntry" : "TRIGGER/CH03/TRIGGER/ENTRY", 
+            "TopicExit" : "TRIGGER/CH03/TRIGGER/EXIT"
+        }, 
+        {
+            "Name" : "CH04", 
+            "TopicPrevious" : "TRIGGER/CH03/TRIGGER/EXIT",
+            "Description" : "Chamber 3", 
+            "Trigger" : {
+                "type" : "delay_constant", 
+                "time" : 10, 
+                "distance" : 8, 
+                "unit" : "meter", 
+                "velocity_topic" : "TEST/MIRROR/CH03/BELTSPEED"
+            }, 
+            "TopicEntry" : "TRIGGER/CH04/TRIGGER/ENTRY", 
+            "TopicExit" : "TRIGGER/CH04/TRIGGER/EXIT"
+        }
+    ]
+}
